@@ -10,7 +10,7 @@
 
 import * as typeorm from 'typeorm';
 import * as schemas from './schemas';
-import { PromoCodeEntity, ServiceEntity } from './schemas/types';
+import { PromoCodeEntity } from './schemas/types';
 import { loadServices } from './initialize';
 
 const PROMO_CODES = [
@@ -24,7 +24,7 @@ const PROMO_CODES = [
   'FATHERS-DAY-007'
 ];
 
-const SERVICES: Partial<ServiceEntity>[] = [
+const SERVICES: { name: string; description: string }[] = [
   { name: 'KFC', description: "Finger-Lickin' Good" },
   { name: 'WALMART', description: 'Save Money. Live Better.' },
   {

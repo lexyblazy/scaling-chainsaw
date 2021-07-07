@@ -13,7 +13,7 @@
     "synchronize": false,
     "logging": false,
   
-    "entities": ["lxib/schemas/**/*.js"],
+    "entities": ["lib/schemas/**/*.js"],
   
     "migrations": ["lib/migration/**/*.js"],
   

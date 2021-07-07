@@ -13,7 +13,7 @@ const ormconfig: typeorm.ConnectionOptions = {
   schema: 'public',
 
   synchronize: false,
-  logging: 'all',
+  logging: false,
 
   entities: ['lib/schemas/**/*.js'],
 
