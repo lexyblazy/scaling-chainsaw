@@ -1,4 +1,3 @@
- Clone the repository and `cd` into the server directory.
 
 ## Install dependencies
 
