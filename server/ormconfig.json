@@ -1,0 +1,21 @@
+{
+    "type": "postgres",
+  
+    "host": "localhost",
+    "port": 5432,
+  
+    "username": "",
+    "password": "",
+    "database": "the_room_services",
+  
+    "schema": "public",
+  
+    "synchronize": false,
+    "logging": false,
+  
+    "entities": ["lxib/schemas/**/*.js"],
+  
+    "migrations": ["lib/migration/**/*.js"],
+  
+    "cli": { "migrationsDir": "src/migration" }
+}
