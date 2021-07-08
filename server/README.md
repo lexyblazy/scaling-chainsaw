@@ -34,7 +34,7 @@ You're free to use any database name of your choice as long as you've created pr
 
 I have put a script in the `package.json` that executes the database migrations
 
-```
+```sh
 yarn run:db:migrations
 ```
 
@@ -60,7 +60,7 @@ yarn start
 ```
 
 To run the server in development mode
-```
+```sh
 yarn dev
 ```
 then when you make changes in the code, rebuild with `yarn build`, that would automatically restart the server
@@ -72,10 +72,10 @@ to run the tests on, Note — You will have create the database first via the  p
 
 You can also use the same database the application uses, in that case you will edit the `database` option in  `src/utils/test/helpers.ts`
 to point the application database, but note that this has some consequences which are: 
-- Automatically drops every table in the database
-- Deletes the migrations table so you can no longer keep track of migrations
-- Schemas changes are automatically generated and synchronized
-- Custom changes in migrations will no longer be possible
+  - Automatically drops every table in the database
+  - Deletes the migrations table so you can no longer keep track of migrations
+  - Schemas changes are automatically generated and synchronized
+  - Custom changes in migrations will no longer be possible
 
 So it's better to use a separate database to run the tests.
 
