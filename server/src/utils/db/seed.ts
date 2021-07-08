@@ -10,7 +10,7 @@
 
 import * as typeorm from 'typeorm';
 import * as schemas from '../../schemas';
-import { loadServices } from '../../initialize';
+import { loadServicesAndConfig } from '../../initialize';
 
 const PROMO_CODES = [
   'HALLOWEEN',
@@ -74,13 +74,20 @@ export const seed = async (existingConnection?: typeorm.Connection) => {
   if (existingConnection) {
     typeormConnection = existingConnection;
   } else {
-    await loadServices();
+    await loadServicesAndConfig();
     typeormConnection = typeorm.getConnection();
   }
 
   const runInTrasaction = async (transactionalEntityManager: typeorm.EntityManager) => {
     const servicesRepository = transactionalEntityManager.getRepository(schemas.service);
     const promoCodesRepsitory = transactionalEntityManager.getRepository(schemas.promoCode);
+
+    // delete everything in services and promoCodes table before re-populating it
+    const deletionCriteria = { id: typeorm.Not(typeorm.IsNull()) };
+    await promoCodesRepsitory.delete(deletionCriteria);
+    await servicesRepository.delete(deletionCriteria);
+
+    console.log('Cleaned existing records');
 
     const services = await servicesRepository.save(SERVICES);
 
@@ -100,6 +107,7 @@ export const seed = async (existingConnection?: typeorm.Connection) => {
     }
 
     await promoCodesRepsitory.save(promoCodeEntities);
+    console.log('Promo codes saved!');
   };
 
   await typeormConnection.manager.transaction(runInTrasaction);

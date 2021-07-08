@@ -27,7 +27,6 @@ export const loadServices = async () => {
 };
 
 export const loadUtilities = (app: express.Application) => {
-  dotenv.config();
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
 };
@@ -37,8 +36,18 @@ export const loadRoutersAndUtilities = (app: express.Application) => {
   loadRouters(app);
 };
 
+export const loadConfig = () => {
+  dotenv.config();
+};
+
 export const loadAll = async (app: express.Application) => {
+  loadConfig();
   loadUtilities(app);
   loadRouters(app);
+  await loadServices();
+};
+
+export const loadServicesAndConfig = async () => {
+  loadConfig();
   await loadServices();
 };
