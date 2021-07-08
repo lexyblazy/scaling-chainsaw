@@ -47,7 +47,7 @@ yarn run:db:migrations
   -  All promo codes are UPPERCASE and  STRING types
   -  Discount values are generated randomly with Math.random()
 
-  See the `src/seed.ts` file to add more services and promo codes. To seed the database run the below command
+  See the `src/utils/db/seed.ts` file to add more services and promo codes. To seed the database run the below command
   
 ```sh
 yarn seed:db
@@ -56,4 +56,22 @@ yarn seed:db
 To run the server
 ```sh
 yarn start 
+```
+
+## Running tests
+
+A seperate database maybe needed for the tests, in the `src/utils/tests/helpers.ts` file you can specify a separate database
+to run the tests on, Note — You will have create the database first via the  postgres CLI before you can connect to it.
+
+You can also use the same database the application uses, in that case you will edit the `database` option in  `src/utils/test/helpers.ts`
+to point the application database, but note that this has some consequences which are: 
+- Automatically drops every table in the database
+- Deletes the migrations table so you can no longer keep track of migrations
+- Schemas changes are automatically generated and synchronized
+- Custom changes in migrations will no longer be possible
+
+So it's better to use a separate database to run the tests.
+
+```sh
+yarn test
 ```
