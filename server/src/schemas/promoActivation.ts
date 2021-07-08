@@ -56,7 +56,8 @@ export const promoActivation = new typeorm.EntitySchema<PromoActivationEntity>({
       name: 'indexUqActivePromotionForUserAndService', // Ensures that a user cannot have more than one active promotion for a service
       columns: ['user', 'service', 'promoCode'],
       where: `"status"='active'`,
-      unique: true
+      unique: true,
+      synchronize: false
     }
   ]
 });
