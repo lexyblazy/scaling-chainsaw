@@ -1,7 +1,7 @@
 import * as typeorm from 'typeorm';
-import * as utils from '../../utils';
-import { ServiceEntity } from '../types';
-import { service as serviceEntity } from '../service';
+import * as utils from '../utils';
+import { ServiceEntity } from '../schemas/types';
+import { service as serviceEntity } from '../schemas/service';
 
 describe('schemas.service:', () => {
   let typeormConnection: typeorm.Connection;

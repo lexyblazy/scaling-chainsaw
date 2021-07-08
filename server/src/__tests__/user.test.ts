@@ -1,7 +1,7 @@
 import * as typeorm from 'typeorm';
-import * as utils from '../../utils';
-import { UserEntity } from '../types';
-import { user as userEntity } from '../user';
+import * as utils from '../utils';
+import { UserEntity } from '../schemas/types';
+import { user as userEntity } from '../schemas/user';
 
 describe('schemas.user:', () => {
   let typeormConnection: typeorm.Connection;

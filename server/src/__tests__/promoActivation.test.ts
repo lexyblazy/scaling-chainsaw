@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import * as typeorm from 'typeorm';
-import * as utils from '../../utils';
-import { ServiceEntity, PromoCodeEntity, PromoStatus, PromoActivationEntity, UserEntity } from '../types';
-import { service as serviceEntity } from '../service';
-import { promoActivation as promoActivationEntity } from '../promoActivation';
-import { promoCode as promoCodeEntity } from '../promoCode';
-import { user as userEntity } from '../user';
+import * as utils from '../utils';
+import { ServiceEntity, PromoCodeEntity, PromoStatus, PromoActivationEntity, UserEntity } from '../schemas/types';
+import { service as serviceEntity } from '../schemas/service';
+import { promoActivation as promoActivationEntity } from '../schemas/promoActivation';
+import { promoCode as promoCodeEntity } from '../schemas/promoCode';
+import { user as userEntity } from '../schemas/user';
 
 describe('schemas.promoActivation:', () => {
   let typeormConnection: typeorm.Connection;

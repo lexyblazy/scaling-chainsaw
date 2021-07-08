@@ -1,9 +1,9 @@
 import * as typeorm from 'typeorm';
 import * as uuid from 'uuid';
-import * as utils from '../../utils';
-import { SessionEntity, UserEntity } from '../types';
-import { user as userEntity } from '../user';
-import { session as sessionEntity } from '../session';
+import * as utils from '../utils';
+import { SessionEntity, UserEntity } from '../schemas/types';
+import { user as userEntity } from '../schemas/user';
+import { session as sessionEntity } from '../schemas/session';
 
 describe('schemas.session:', () => {
   let typeormConnection: typeorm.Connection;

@@ -1,8 +1,8 @@
 import * as typeorm from 'typeorm';
-import * as utils from '../../utils';
-import { ServiceEntity, PromoCodeEntity, PromoStatus } from '../types';
-import { service as serviceEntity } from '../service';
-import { promoCode as promoCodeEntity } from '../promoCode';
+import * as utils from '../utils';
+import { ServiceEntity, PromoCodeEntity, PromoStatus } from '../schemas/types';
+import { service as serviceEntity } from '../schemas/service';
+import { promoCode as promoCodeEntity } from '../schemas/promoCode';
 
 describe('schemas.promoCode:', () => {
   let typeormConnection: typeorm.Connection;
