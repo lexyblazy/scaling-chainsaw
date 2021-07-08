@@ -1,4 +1,4 @@
-type PromoStatus = 'active' | 'pending' | 'canceled' | 'expired';
+export type PromoStatus = 'active' | 'pending' | 'canceled' | 'expired';
 
 export interface UserEntity {
   id: string;
