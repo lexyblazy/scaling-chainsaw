@@ -7,15 +7,11 @@ import * as services from './services';
 import ormconfig from './ormconfig';
 
 export const loadRouters = (app: express.Application) => {
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json());
-
   app.use('/users', users.router.create());
   app.use('/services', services.router.create());
 };
 
 export const loadServices = async () => {
-  dotenv.config();
   const typeormConnectionOptions = ormconfig;
 
   Object.assign(typeormConnectionOptions, {
@@ -28,4 +24,21 @@ export const loadServices = async () => {
 
   await typeorm.createConnection(typeormConnectionOptions);
   console.log('Connected to database...');
+};
+
+export const loadUtilities = (app: express.Application) => {
+  dotenv.config();
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+};
+
+export const loadRoutersAndUtilities = (app: express.Application) => {
+  loadUtilities(app);
+  loadRouters(app);
+};
+
+export const loadAll = async (app: express.Application) => {
+  loadUtilities(app);
+  loadRouters(app);
+  await loadServices();
 };
