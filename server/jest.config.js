@@ -10,5 +10,6 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest'
   },
   testRegex: '\\.test\\.tsx?$',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  coveragePathIgnorePatterns: ['node_modules', 'test-config', '.module.ts', 'lib']
 };
