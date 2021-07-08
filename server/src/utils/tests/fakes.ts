@@ -12,6 +12,6 @@ export const service: Partial<ServiceEntity> = {
 };
 export const promoCode: Partial<PromoCodeEntity> = {
   status: 'active',
-  discountValue: ' 0.5',
+  discountValue: '0.25',
   code: 'EAT_ONCE_LIVE_FOREVER'
 };
