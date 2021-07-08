@@ -10,13 +10,17 @@ export const get = async (req: express.Request, res: express.Response) => {
     async () => {
       const typeormConnection = typeorm.getConnection();
       const servicesRepository = typeormConnection.getRepository(schemas.service);
-      const serviceName = req.params.service_name;
+      const serviceName = req.query.name as string;
 
-      const services = await servicesRepository.find({
-        where: {
+      const findOptions: typeorm.FindManyOptions<schemas.ServiceEntity> = {};
+
+      if (serviceName) {
+        findOptions.where = {
           name: typeorm.Like(`%${serviceName.toUpperCase()}%`)
-        }
-      });
+        };
+      }
+
+      const services = await servicesRepository.find(findOptions);
 
       return res.send(services);
     },
