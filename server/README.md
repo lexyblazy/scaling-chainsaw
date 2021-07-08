@@ -53,10 +53,17 @@ yarn run:db:migrations
 yarn seed:db
 ```
 
-To run the server
+## Running the server
+To run the server without intending to make changes to the code
 ```sh
 yarn start 
 ```
+
+To run the server in development mode
+```
+yarn dev
+```
+then when you make changes in the code, rebuild with `yarn build`, that would automatically restart the server
 
 ## Running tests
 
