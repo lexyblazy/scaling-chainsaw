@@ -4,7 +4,6 @@ import * as typeorm from 'typeorm';
 import HttpStatus from 'http-status-codes';
 
 import * as schemas from '../../schemas';
-import { UserEntity } from '../../schemas/types';
 import * as helpers from '../helpers';
 import * as utils from '../../utils';
 import _ from 'lodash';
@@ -45,7 +44,7 @@ export const signup = async (req: express.Request, res: express.Response) => {
 
       const hashedPassword = bcrypt.hashSync(password, SALT_ROUNDS);
 
-      const newUser: Partial<UserEntity> = {
+      const newUser: Partial<schemas.UserEntity> = {
         email,
         password: hashedPassword,
         normalizedEmail

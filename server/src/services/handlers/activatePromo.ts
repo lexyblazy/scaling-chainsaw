@@ -4,7 +4,6 @@ import HttpStatus from 'http-status-codes';
 import _ from 'lodash';
 import * as schemas from '../../schemas';
 import * as utils from '../../utils';
-import { PromoActivationEntity } from '../../schemas/types';
 
 export const activatePromo = async (req: express.Request, res: express.Response) => {
   const LOG_PREFIX = 'services.handlers.activatePromo:';
@@ -59,7 +58,7 @@ export const activatePromo = async (req: express.Request, res: express.Response)
         return;
       }
 
-      const newPromoActivation: Partial<PromoActivationEntity> = {
+      const newPromoActivation: Partial<schemas.PromoActivationEntity> = {
         user,
         service: promoCode.service,
         promoCode,

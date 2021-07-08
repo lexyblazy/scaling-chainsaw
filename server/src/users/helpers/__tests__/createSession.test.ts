@@ -1,13 +1,12 @@
 import * as typeorm from 'typeorm';
 import { createSession } from '../createSession';
 import * as schemas from '../../../schemas';
-import { UserEntity } from '../../../schemas/types';
 import * as utils from '../../../utils';
 
 describe('users.helpers.createSession:', () => {
   let typeormConnection: typeorm.Connection;
-  let usersRepository: typeorm.Repository<UserEntity>;
-  let user: UserEntity;
+  let usersRepository: typeorm.Repository<schemas.UserEntity>;
+  let user: schemas.UserEntity;
 
   beforeAll(async () => {
     typeormConnection = await utils.tests.helpers.createTypeormConnection();

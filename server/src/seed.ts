@@ -10,7 +10,6 @@
 
 import * as typeorm from 'typeorm';
 import * as schemas from './schemas';
-import { PromoCodeEntity } from './schemas/types';
 import { loadServices } from './initialize';
 
 const PROMO_CODES = [
@@ -69,7 +68,7 @@ const seed = async () => {
 
     console.log('Services saved');
 
-    const promoCodeEntities: Partial<PromoCodeEntity>[] = [];
+    const promoCodeEntities: Partial<schemas.PromoCodeEntity>[] = [];
 
     for (const code of PROMO_CODES) {
       for (const service of services) {
