@@ -1,12 +1,8 @@
 import express from 'express';
 import * as initialize from './initialize';
-import bodyParser from 'body-parser';
 
 const main = async () => {
   const app = express();
-
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json());
 
   await initialize.loadServices();
   initialize.loadRouters(app);

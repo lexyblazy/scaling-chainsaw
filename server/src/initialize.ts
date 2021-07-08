@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import * as typeorm from 'typeorm';
@@ -6,6 +7,9 @@ import * as services from './services';
 import ormconfig from './ormconfig';
 
 export const loadRouters = (app: express.Application) => {
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+
   app.use('/users', users.router.create());
   app.use('/services', services.router.create());
 };
