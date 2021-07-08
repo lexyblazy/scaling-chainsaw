@@ -17,7 +17,7 @@ describe('user.handlers.logout', () => {
     typeormConnection = await utils.tests.helpers.createTypeormConnection();
     await typeormConnection.synchronize(true);
 
-    initialize.loadRouters(app);
+    initialize.loadRoutersAndUtilities(app);
   });
 
   beforeEach(async () => {

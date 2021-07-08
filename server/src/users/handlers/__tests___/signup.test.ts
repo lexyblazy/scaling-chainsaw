@@ -16,7 +16,7 @@ describe('user.handlers.signup:', () => {
   beforeAll(async () => {
     typeormConnection = await utils.tests.helpers.createTypeormConnection();
     await typeormConnection.synchronize(true);
-    initialize.loadRouters(app);
+    initialize.loadRoutersAndUtilities(app);
   });
 
   beforeEach(async () => {
