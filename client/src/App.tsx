@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+import * as apis from "./apis";
+import { Form, Promos } from "./components";
+import { SESSION_LABEL, USER_LABEL } from "./consts";
+import { AppState, Session, User } from "./types";
+import * as utils from "./utils";
+
+class App extends React.Component {
+  state: AppState = {
+    isAuthenticated: false,
+    user: null,
+  };
+
+  componentDidMount() {
+    const user: User = JSON.parse(localStorage.getItem(USER_LABEL)!);
+    const session: Session = JSON.parse(localStorage.getItem(SESSION_LABEL)!);
+
+    if (user && session) {
+      this.setState({ isAuthenticated: true, user });
+    }
+  }
+
+  logout = async () => {
+    await apis.users.logout();
+    utils.auth.logout();
+    this.setState({ isAuthenticated: false });
+  };
+
+  render() {
+    return (
+      <div className="container">
+        {!this.state.isAuthenticated ? (
+          <Form
+            setAuthentication={() => this.setState({ isAuthenticated: true })}
+          />
+        ) : (
+          <>
+            <small
+              className="btn-link"
+              onClick={async () => await this.logout()}
+            >
+              Logout
+            </small>
+            <Promos />
+          </>
+        )}
+      </div>
+    );
+  }
 }
 
 export default App;
