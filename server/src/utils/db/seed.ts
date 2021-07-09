@@ -80,11 +80,13 @@ export const seed = async (existingConnection?: typeorm.Connection) => {
 
   const runInTrasaction = async (transactionalEntityManager: typeorm.EntityManager) => {
     const servicesRepository = transactionalEntityManager.getRepository(schemas.service);
-    const promoCodesRepsitory = transactionalEntityManager.getRepository(schemas.promoCode);
+    const promoCodesRepository = transactionalEntityManager.getRepository(schemas.promoCode);
+    const promoActivationsRepository = transactionalEntityManager.getRepository(schemas.promoActivation);
 
     // delete everything in services and promoCodes table before re-populating it
     const deletionCriteria = { id: typeorm.Not(typeorm.IsNull()) };
-    await promoCodesRepsitory.delete(deletionCriteria);
+    await promoActivationsRepository.delete(deletionCriteria);
+    await promoCodesRepository.delete(deletionCriteria);
     await servicesRepository.delete(deletionCriteria);
 
     console.log('Cleaned existing records');
@@ -106,7 +108,7 @@ export const seed = async (existingConnection?: typeorm.Connection) => {
       }
     }
 
-    await promoCodesRepsitory.save(promoCodeEntities);
+    await promoCodesRepository.save(promoCodeEntities);
     console.log('Promo codes saved!');
   };
 
