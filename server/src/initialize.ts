@@ -1,7 +1,9 @@
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import * as typeorm from 'typeorm';
+import * as consts from './consts';
 import * as users from './users';
 import * as services from './services';
 import ormconfig from './ormconfig';
@@ -27,6 +29,7 @@ export const loadServices = async () => {
 };
 
 export const loadUtilities = (app: express.Application) => {
+  app.use(cors({ origin: [consts.FRONTEND_DEV_URL] }));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
 };

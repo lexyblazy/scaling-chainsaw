@@ -83,7 +83,7 @@ export const seed = async (existingConnection?: typeorm.Connection) => {
     const promoCodesRepository = transactionalEntityManager.getRepository(schemas.promoCode);
     const promoActivationsRepository = transactionalEntityManager.getRepository(schemas.promoActivation);
 
-    // delete everything in services and promoCodes table before re-populating it
+    // delete everything in services, promoCodes and promoActivations table before re-populating it
     const deletionCriteria = { id: typeorm.Not(typeorm.IsNull()) };
     await promoActivationsRepository.delete(deletionCriteria);
     await promoCodesRepository.delete(deletionCriteria);
