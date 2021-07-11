@@ -2,11 +2,11 @@ import React from "react";
 import _ from "lodash";
 import * as apis from "../apis";
 import {
+  PromoActivation,
   PromoActivationState,
   Service,
   ServicesComponentAppState,
 } from "../types";
-import * as utils from "../utils";
 import { Loader } from "./Loader";
 
 export class Services extends React.Component {
@@ -14,6 +14,7 @@ export class Services extends React.Component {
     services: [],
     errorMessage: "",
     loading: true,
+    activationloading: false,
     promoActivation: null,
     searchTerm: "",
     searchResults: [],
@@ -22,6 +23,28 @@ export class Services extends React.Component {
   async componentDidMount() {
     await this.getServicesAndPromotions();
   }
+
+  activatePromotion = async (service: Service, promoCode: string) => {
+    this.setState({ errorMessage: "", activationloading: true });
+
+    const response = await apis.services.activateBonus(promoCode);
+    if (response.ok && response.data) {
+      this.updatePromoActivationState(service, { isActivated: true });
+    } else {
+      if (!response.ok && response.data && response.data.error) {
+        const { error, existingActivePromoActivation } = response.data;
+
+        if (existingActivePromoActivation) {
+          this.updatePromoActivationState(service, { isActivated: true });
+        } else {
+          this.setState({ errorMessage: error });
+        }
+      } else {
+        this.setState({ errorMessage: "Failed to activate promo" });
+      }
+    }
+    this.setState({ activationloading: false });
+  };
 
   copyToClipBoard = async (promoCode: string) => {
     await navigator.clipboard.writeText(promoCode);
@@ -56,25 +79,25 @@ export class Services extends React.Component {
     if (!promoActivation) {
       return;
     }
-    const serviceId = service.id;
-    const newPromoActivationState: PromoActivationState = {
-      ...promoActivation,
-      [serviceId]: {
-        ...promoActivation[serviceId],
-        selectedCode: _.sample(service.promoCodes) ?? service.promoCodes[0],
-      },
-    };
-    this.setState({
-      promoActivation: newPromoActivationState,
+
+    this.updatePromoActivationState(service, {
+      selectedCode: _.sample(service.promoCodes) ?? service.promoCodes[0],
+      isActivated: false,
     });
   };
 
   renderServiceCards = () => {
-    const { services, promoActivation, searchTerm, searchResults } = this.state;
+    const {
+      services,
+      promoActivation,
+      searchTerm,
+      searchResults,
+      activationloading,
+    } = this.state;
     const listToRender = searchTerm ? searchResults : services;
     if (listToRender.length && promoActivation) {
       return listToRender.map((service) => {
-        const { selectedCode } = promoActivation[service.id];
+        const { selectedCode, isActivated } = promoActivation[service.id];
         return (
           <div className="card mb-3" key={service.id}>
             <div className="row">
@@ -110,9 +133,21 @@ export class Services extends React.Component {
               </div>
               <div className="col-md-3">
                 <div className="card-body mt-3">
-                  <button className="btn btn-lg btn-primary">
-                    Activate bonus
-                  </button>
+                  {isActivated ? (
+                    <button className="btn btn-lg btn-success">
+                      Activated
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-lg btn-primary"
+                      onClick={() =>
+                        this.activatePromotion(service, selectedCode)
+                      }
+                      disabled={activationloading}
+                    >
+                      Activate bonus
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -163,6 +198,27 @@ export class Services extends React.Component {
     );
   };
 
+  updatePromoActivationState = (
+    service: Service,
+    update: Partial<PromoActivation>
+  ) => {
+    const { promoActivation } = this.state;
+    if (!promoActivation) {
+      return;
+    }
+    const serviceId = service.id;
+    const newPromoActivationState: PromoActivationState = {
+      ...promoActivation,
+      [serviceId]: {
+        ...promoActivation[serviceId],
+        ...update,
+      },
+    };
+    this.setState({
+      promoActivation: newPromoActivationState,
+    });
+  };
+
   render() {
     const { errorMessage, loading } = this.state;
 
@@ -172,10 +228,10 @@ export class Services extends React.Component {
 
     return (
       <div>
+        {this.renderSearch()}
         {errorMessage && (
           <div className="alert alert-danger">{errorMessage}</div>
         )}
-        {this.renderSearch()}
         {this.renderServiceCards()}
       </div>
     );

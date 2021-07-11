@@ -33,19 +33,31 @@ export type ServicesListResponse = {
   error?: string;
 };
 
+export interface PromoActivation {
+  isActivated: boolean;
+  codes: string[];
+  selectedCode: string;
+}
+
 export type PromoActivationState = {
-  [key in string]: {
-    isActivated: boolean;
-    codes: string[];
-    selectedCode: string;
-  };
+  [key in string]: PromoActivation;
 };
 export interface ServicesComponentAppState {
   services: Service[];
   searchResults: Service[];
-
   errorMessage: string;
   loading: boolean;
   promoActivation: PromoActivationState | null;
   searchTerm: string;
+  activationloading: boolean;
+}
+
+export interface ActivatePromotionResponse {
+  activationStatus: string;
+  discountValue: string;
+  id: string;
+  promoCodeStatus: string;
+  serviceName: string;
+  error?: string;
+  existingActivePromoActivation?: boolean;
 }
