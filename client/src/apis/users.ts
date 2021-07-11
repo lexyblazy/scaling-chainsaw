@@ -1,16 +1,12 @@
 import apisauce from "apisauce";
 import * as consts from "../consts";
 import * as utils from "../utils";
-import {
-  GeneralApiError,
-  UserLoginResponse,
-  UserSignupResponse,
-} from "../types";
+import { UserLoginResponse, UserSignupResponse } from "../types";
 
 export const login = async (email: string, password: string) => {
   const api = apisauce.create({ baseURL: consts.BASE_API_URL });
 
-  return api.post<UserLoginResponse, GeneralApiError>("/users/login", {
+  return api.post<UserLoginResponse>("/users/login", {
     email,
     password,
   });
@@ -19,7 +15,7 @@ export const login = async (email: string, password: string) => {
 export const signup = async (email: string, password: string) => {
   const api = apisauce.create({ baseURL: consts.BASE_API_URL });
 
-  return api.post<UserSignupResponse, GeneralApiError>("/users/signup", {
+  return api.post<UserSignupResponse>("/users/signup", {
     email,
     password,
   });
@@ -35,5 +31,5 @@ export const logout = async () => {
     },
   });
 
-  return api.post<{}, GeneralApiError>("/users/logout", {});
+  return api.post<{}>("/users/logout", {});
 };

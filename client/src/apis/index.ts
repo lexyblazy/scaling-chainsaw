@@ -1,2 +1,2 @@
-export * as consts from '../consts';
-export * as users from './users'
+export * as services from "./services";
+export * as users from "./users";

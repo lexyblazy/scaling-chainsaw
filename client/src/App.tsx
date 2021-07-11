@@ -2,7 +2,7 @@ import React from "react";
 
 import "./App.css";
 import * as apis from "./apis";
-import { Form, Promos } from "./components";
+import { Form, Services } from "./components";
 import { SESSION_LABEL, USER_LABEL } from "./consts";
 import { AppState, Session, User } from "./types";
 import * as utils from "./utils";
@@ -43,7 +43,7 @@ class App extends React.Component {
             >
               Logout
             </small>
-            <Promos />
+            <Services />
           </>
         )}
       </div>
