@@ -57,7 +57,7 @@ describe('services.handlers.list', () => {
     const getServicesResponse = await agent.get('/services/list').set({ authorization: authorizationToken });
 
     expect(getServicesResponse.status).toBe(HttpStatus.OK);
-    expect(getServicesResponse.body).toBeDefined();
+    expect(getServicesResponse.body.services).toBeDefined();
   });
 
   it('it should never return more than 10 services per page', async () => {
@@ -67,7 +67,7 @@ describe('services.handlers.list', () => {
     const authorizationToken = signupResponse.body.session.token;
     const getServicesResponse = await agent.get('/services/list').set({ authorization: authorizationToken });
     expect(getServicesResponse.status).toBe(HttpStatus.OK);
-    expect(getServicesResponse.body.length).toBeLessThanOrEqual(10);
+    expect(getServicesResponse.body.services.length).toBeLessThanOrEqual(10);
   });
 
   it('it should return records even if a negative page is passed', async () => {
@@ -77,6 +77,6 @@ describe('services.handlers.list', () => {
     const authorizationToken = signupResponse.body.session.token;
     const getServicesResponse = await agent.get('/services/list?page=-2').set({ authorization: authorizationToken });
     expect(getServicesResponse.status).toBe(HttpStatus.OK);
-    expect(getServicesResponse.body.length).toBeLessThanOrEqual(10);
+    expect(getServicesResponse.body.services.length).toBeLessThanOrEqual(10);
   });
 });
