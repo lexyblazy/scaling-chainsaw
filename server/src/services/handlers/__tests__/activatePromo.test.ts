@@ -114,6 +114,7 @@ describe('services.handlers.activatePromo', () => {
       .send({ code: promoCode.code });
 
     expect(secondActivationResponse.status).toBe(HttpStatus.FORBIDDEN);
-    expect(secondActivationResponse.body).toEqual({ error: 'You already have an existing active promo for this code' });
+    expect(secondActivationResponse.body.existingActivePromoActivation).toBeTruthy();
+    expect(secondActivationResponse.body.error).toBe('You already have an existing active promo for this code');
   });
 });

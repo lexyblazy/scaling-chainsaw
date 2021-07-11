@@ -53,7 +53,9 @@ export const activatePromo = async (req: express.Request, res: express.Response)
       });
 
       if (existingActivePromoActivation) {
-        res.status(HttpStatus.FORBIDDEN).send({ error: 'You already have an existing active promo for this code' });
+        res
+          .status(HttpStatus.FORBIDDEN)
+          .send({ error: 'You already have an existing active promo for this code', existingActivePromoActivation: true });
 
         return;
       }
